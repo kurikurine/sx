@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同人本阅读页</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .reader-container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #page-info {
+            margin-top: 10px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reader-container">
+    <!-- 图片展示区，点击图片也可以直接翻到下一页 -->
+    <img id="comic-image" src="" alt="加载中..." onclick="nextPage()">
+    
+    <div id="page-info">1 / 1</div>
+
+    <div class="controls">
+        <button onclick="prevPage()">上一页</button>
+        <button onclick="nextPage()">下一页</button>
+    </div>
+</div>
+
+<script>
+    // 💡 只需要在这里修改你的图片文件名！
+    // 假设你的图片叫 01.jpg, 02.jpg，依次写在下面即可：
+    const images = [
+        "01.jpg",
+        "02.jpg",
+        "03.jpg",
+        "04.jpg"
+    ];
+
+    let currentIndex = 0;
+    const imgElement = document.getElementById("comic-image");
+    const pageInfo = document.getElementById("page-info");
+
+    function updateComic() {
+        if (images.length > 0) {
+            imgElement.src = images[currentIndex];
+            pageInfo.innerText = `${currentIndex + 1} / ${images.length}`;
+        }
+    }
+
+    function nextPage() {
+        if (currentIndex < images.length - 1) {
+            currentIndex++;
+            updateComic();
+            window.scrollTo(0, 0); // 翻页后自动回到顶部
+        }
+    }
+
+    function prevPage() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateComic();
+            window.scrollTo(0, 0);
+        }
+    }
+
+    // 初始化加载第一张
+    updateComic();
+</script>
+
+</body>
+</html>
